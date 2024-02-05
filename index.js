@@ -1,18 +1,21 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+// import { useEffect, useState, useRef } from 'react'
 
-function Canvas() {
-    const canvasRef = useRef(null)
+const Canvas = {
+    setBackground: (canvas, color) => {
+        try {
+            if (!canvas) {
+                throw new Error('Invalid canvas reference')
+            }
 
-    useEffect(() => {
-        const canvas = canvasRef.current
-        const context = canvas.getContext('2d')
-        context.fillStyle = 'blue'
-        context.fillRect(0, 0, canvas.width, canvas.height)
-    }, [])
-
-    return <canvas ref={canvasRef} />
+            const context = canvas.getContext('2d')
+            context.fillStyle = color
+            context.fillRect(0, 0, canvas.width, canvas.height)
+        } catch (error) {
+            console.error(error.message)
+        }
+    },
 }
 
 export default Canvas
