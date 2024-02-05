@@ -1,0 +1,19 @@
+{
+    "name": "canvas-react",
+    "type": "module",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "canvas",
+        "react"
+    ],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "react": "^18.2.0"
+    }
+}
