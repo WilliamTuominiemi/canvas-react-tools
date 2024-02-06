@@ -1,5 +1,11 @@
 # react-canvas
 
+## Installation
+
+1. clone repository
+2. `npm link` in canvas-react repository
+3. `npm link canvas-react` and `npm install` in the repository you want to use canvas-react in
+
 ## Documentation
 
 ### Functions
@@ -14,11 +20,11 @@
 
 #### drawShape
 
-`Canvas.drawShape(canvasRef.current, shape)` where the shape is an object. Rectangle, circle or line.
-
 -   Rectangle `const rectangle = new Rectangle(x, y, width, height, fillColor, strokeColor, lineWidth)`
 -   Circle `const circle = new Circle(x, y, radius, fillColor, strokeColor, lineWidth)`
 -   Line `const line = new Line(startX, startY, endX, endY, color, lineWidth)`
+
+`Canvas.drawShape(canvasRef.current, shape)` where the shape is an object. Rectangle, circle or line.
 
 These shapes are saved as objects and their data can be easily accessed and used later.
 
@@ -26,7 +32,46 @@ These shapes are saved as objects and their data can be easily accessed and used
 
 Similar to drawShape, the text is an object.
 
+`const text = new Text(text, x, y, color, font, size)`
+
+`Canvas.writeText(canvasRef.current, text)`
+
+## Demo
+
+page.js in a next.js react project
+
 ```
-const text = new Text(text, x, y, color, font, size)
-Canvas.writeText(canvasRef.current, text)
+'use client'
+
+import { useEffect, useRef } from 'react'
+
+import { Canvas, Rectangle, Circle, Line, Text } from 'canvas-react'
+
+export default function Home() {
+    const canvasRef = useRef(null)
+
+    useEffect(() => {
+        Canvas.setSize(canvasRef.current, 0.5, 0.5)
+        Canvas.setBackground(canvasRef.current, 'gray')
+
+        const rectangle = new Rectangle(50, 50, 350, 80, 'blue', 'black', 2)
+        Canvas.drawShape(canvasRef.current, rectangle)
+
+        const circle = new Circle(100, 300, 30, 'red', 'white', 4)
+        Canvas.drawShape(canvasRef.current, circle)
+
+        const line = new Line(200, 200, 400, 400, 'green', 5)
+        Canvas.drawShape(canvasRef.current, line)
+
+        const text = new Text('canvas-react', 100, 100, 'white', 'Arial', '30px')
+        Canvas.writeText(canvasRef.current, text)
+    }, [])
+
+    return (
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+            <canvas ref={canvasRef} />
+        </main>
+    )
+}
+
 ```
