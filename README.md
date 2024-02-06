@@ -11,3 +11,13 @@
 #### setBackground
 
 `Canvas.setBackground(canvasRef.current, 'red')` where "red" can be altered to choose a color
+
+#### drawShape
+
+`Canvas.drawShape(canvasRef.current, shape)` where the shape is an object. Rectangle, circle or line.
+
+-   Rectangle `const rectangle = new Rectangle(x, y, width, height, fillColor, strokeColor, lineWidth)`
+-   Circle `const circle = new Circle(x, y, radius, fillColor, strokeColor, lineWidth)`
+-   Line `const line = new Line(startX, startY, endX, endY, color, lineWidth)`
+
+These shapes are saved as objects and their data can be easily accessed and used later.
