@@ -1,10 +1,8 @@
-# react-canvas
+# canvas-react-tools
 
 ## Installation
 
-1. clone repository
-2. `npm link` in canvas-react repository
-3. `npm link canvas-react` and `npm install` in the repository you want to use canvas-react in
+1. `npm install canvas-react-tools`
 
 ## Documentation
 
@@ -45,7 +43,7 @@ page.js in a next.js react project
 
 import { useEffect, useRef } from 'react'
 
-import { Canvas, Rectangle, Circle, Line, Text } from 'canvas-react'
+import { Canvas, Rectangle, Circle, Line, Text } from 'canvas-react-tools'
 
 export default function Home() {
     const canvasRef = useRef(null)
