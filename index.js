@@ -1,7 +1,5 @@
 'use client'
 
-// import { useEffect, useState, useRef } from 'react'
-
 class Rectangle {
     constructor(x, y, width, height, fillColor, strokeColor, lineWidth) {
         this.x = x
@@ -66,6 +64,23 @@ class Line {
     }
 }
 
+class Text {
+    constructor(text, x, y, color, font, size) {
+        this.text = text
+        this.x = x
+        this.y = y
+        this.color = color
+        this.font = font
+        this.size = size
+    }
+
+    write(context) {
+        context.font = `${this.size} ${this.font}`
+        context.fillStyle = this.color
+        context.fillText(this.text, this.x, this.y)
+    }
+}
+
 const Canvas = {
     setSize: (canvas, newWidth, newHeight) => {
         try {
@@ -115,6 +130,20 @@ const Canvas = {
             console.error(error.message)
         }
     },
+
+    writeText: (canvas, text) => {
+        try {
+            if (!canvas) {
+                throw new Error('Invalid canvas reference')
+            }
+
+            const context = canvas.getContext('2d')
+
+            text.write(context)
+        } catch (error) {
+            console.error(error.message)
+        }
+    },
 }
 
-export { Canvas, Rectangle, Circle, Line }
+export { Canvas, Rectangle, Circle, Line, Text }

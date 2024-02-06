@@ -21,3 +21,12 @@
 -   Line `const line = new Line(startX, startY, endX, endY, color, lineWidth)`
 
 These shapes are saved as objects and their data can be easily accessed and used later.
+
+#### writeText
+
+Similar to drawShape, the text is an object.
+
+```
+const text = new Text(text, x, y, color, font, size)
+Canvas.writeText(canvasRef.current, text)
+```
