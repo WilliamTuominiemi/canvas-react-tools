@@ -3,9 +3,10 @@
 let backgroundColor = 'white'
 
 class Rectangle {
-    constructor(x, y, width, height, fillColor, strokeColor, lineWidth) {
+    constructor(x, y, width, height, rotation, fillColor, strokeColor, lineWidth) {
         this.x = x
         this.y = y
+        this.rotation = rotation
         this.width = width
         this.height = height
         this.fillColor = fillColor
@@ -23,12 +24,44 @@ class Rectangle {
     }
 
     remove(context) {
+        context.save()
+
+        context.translate(this.x + this.width / 2, this.y + this.height / 2)
+        context.rotate(this.rotation)
+        context.translate(-(this.x + this.width / 2), -(this.y + this.height / 2))
+
         context.fillStyle = backgroundColor
         context.strokeStyle = backgroundColor
         context.lineWidth = this.lineWidth
 
-        context.fillRect(this.x, this.y, this.width, this.height)
-        context.strokeRect(this.x, this.y, this.width, this.height)
+        context.fillRect(this.x - 5, this.y - 5, this.width + 10, this.height + 10)
+        context.strokeRect(this.x - 5, this.y - 5, this.width + 10, this.height + 10)
+
+        context.restore()
+    }
+
+    animate(context, movementX, movementY, rotation, speed) {
+        this.x += movementX
+        this.y += movementY
+        this.rotation += rotation
+
+        if (context) {
+            context.save()
+
+            context.translate(this.x + this.width / 2, this.y + this.height / 2)
+            context.rotate(this.rotation)
+            context.translate(-(this.x + this.width / 2), -(this.y + this.height / 2))
+
+            this.draw(context)
+
+            context.restore()
+
+            setTimeout(() => {
+                this.remove(context)
+
+                this.animate(context, movementX, movementY, rotation, speed)
+            }, 1000 / speed)
+        }
     }
 }
 
@@ -207,6 +240,21 @@ const Canvas = {
             const context = canvas.getContext('2d')
 
             text.remove(context)
+        } catch (error) {
+            console.error(error.message)
+        }
+    },
+
+    animate: (canvas, shape, movementX, movementY, rotation, speed) => {
+        try {
+            if (!canvas) {
+                throw new Error('Invalid canvas reference')
+            }
+
+            const context = canvas.getContext('2d')
+            shape.remove(context)
+
+            shape.animate(context, movementX, movementY, rotation, speed)
         } catch (error) {
             console.error(error.message)
         }

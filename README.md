@@ -18,7 +18,8 @@
 
 #### drawShape
 
--   Rectangle `const rectangle = new Rectangle(x, y, width, height, fillColor, strokeColor, lineWidth)`
+-   Rectangle `const rectangle = new Rectangle(x, y, width, height, rotation, fillColor, strokeColor, lineWidth)`
+    -   `Canvas.animate(canvasRef.current, rectangle, movementX, movementY, rotation, speed)`
 -   Circle `const circle = new Circle(x, y, radius, fillColor, strokeColor, lineWidth)`
 -   Line `const line = new Line(startX, startY, endX, endY, color, lineWidth)`
 
