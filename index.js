@@ -1,5 +1,7 @@
 'use client'
 
+let backgroundColor = 'white'
+
 class Rectangle {
     constructor(x, y, width, height, fillColor, strokeColor, lineWidth) {
         this.x = x
@@ -14,6 +16,15 @@ class Rectangle {
     draw(context) {
         context.fillStyle = this.fillColor
         context.strokeStyle = this.strokeColor
+        context.lineWidth = this.lineWidth
+
+        context.fillRect(this.x, this.y, this.width, this.height)
+        context.strokeRect(this.x, this.y, this.width, this.height)
+    }
+
+    remove(context) {
+        context.fillStyle = backgroundColor
+        context.strokeStyle = backgroundColor
         context.lineWidth = this.lineWidth
 
         context.fillRect(this.x, this.y, this.width, this.height)
@@ -41,6 +52,17 @@ class Circle {
         context.fill()
         context.stroke()
     }
+
+    remove(context) {
+        context.fillStyle = backgroundColor
+        context.strokeStyle = backgroundColor
+        context.lineWidth = this.lineWidth * 2
+
+        context.beginPath()
+        context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI)
+        context.fill()
+        context.stroke()
+    }
 }
 
 class Line {
@@ -62,6 +84,16 @@ class Line {
         context.stroke()
         context.closePath()
     }
+
+    remove(context) {
+        context.beginPath()
+        context.moveTo(this.startX, this.startY)
+        context.lineTo(this.endX, this.endY)
+        context.strokeStyle = backgroundColor
+        context.lineWidth = this.lineWidth * 2
+        context.stroke()
+        context.closePath()
+    }
 }
 
 class Text {
@@ -77,6 +109,12 @@ class Text {
     write(context) {
         context.font = `${this.size} ${this.font}`
         context.fillStyle = this.color
+        context.fillText(this.text, this.x, this.y)
+    }
+
+    remove(context) {
+        context.font = `${this.size} ${this.font}`
+        context.fillStyle = backgroundColor
         context.fillText(this.text, this.x, this.y)
     }
 }
@@ -112,6 +150,7 @@ const Canvas = {
             const context = canvas.getContext('2d')
             context.fillStyle = color
             context.fillRect(0, 0, canvas.width, canvas.height)
+            backgroundColor = color
         } catch (error) {
             console.error(error.message)
         }
@@ -131,6 +170,20 @@ const Canvas = {
         }
     },
 
+    removeShape: (canvas, shape) => {
+        try {
+            if (!canvas) {
+                throw new Error('Invalid canvas reference')
+            }
+
+            const context = canvas.getContext('2d')
+
+            shape.remove(context)
+        } catch (error) {
+            console.error(error.message)
+        }
+    },
+
     writeText: (canvas, text) => {
         try {
             if (!canvas) {
@@ -140,6 +193,20 @@ const Canvas = {
             const context = canvas.getContext('2d')
 
             text.write(context)
+        } catch (error) {
+            console.error(error.message)
+        }
+    },
+
+    removeText: (canvas, text) => {
+        try {
+            if (!canvas) {
+                throw new Error('Invalid canvas reference')
+            }
+
+            const context = canvas.getContext('2d')
+
+            text.remove(context)
         } catch (error) {
             console.error(error.message)
         }
